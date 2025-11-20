@@ -1,4 +1,5 @@
 ﻿.terraform/
+Project-5-EC2\terraform-ec2-key.pub
 *.tfstate
 *.tfstate.backup
 *.tfvars
