@@ -11,28 +11,28 @@ module "vpc" {
   vpc-name = "Module VPC"
 }
 
-# data "aws_ami" "ubuntu" {
-#   most_recent = true
-#   owners      = ["099720109477"] # Canonical (official Ubuntu)
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  owners      = ["099720109477"] # Canonical (official Ubuntu)
 
-#   filter {
-#     name   = "name"
-#     values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-#   }
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
 
-#   filter {
-#     name   = "virtualization-type"
-#     values = ["hvm"]
-#   }
-# }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
 
-# resource "aws_instance" "iac_ec2" {
-#   ami           = data.aws_ami.ubuntu.id
-#   instance_type = "t3.micro"
+resource "aws_instance" "iac_ec2" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+  subnet_id = module.vpc.subnet_id
+  vpc_security_group_ids = [module.vpc.security_group_id]
 
-#   vpc_security_group_ids = [module.vpc.security_group_id]
-
-#   tags = {
-#     Name = "ubuntu-ec2"
-#   }
-# }
+  tags = {
+    Name = "ubuntu-ec2"
+  }
+}
